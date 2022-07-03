@@ -16,7 +16,7 @@ class SetListsController extends Controller
     public function index(Request $request)
     {
         $setlists = SetLists::where('title', 'like', '%'.$request->query('search').'%')
-                            ->Orderby('title','asc')
+                            ->Orderby('created_at','Desc')
                             ->paginate(10);
 
         return response()->json($setlists, 200);

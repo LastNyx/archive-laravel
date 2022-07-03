@@ -15,10 +15,16 @@ class ArtistsController extends Controller
      */
     public function index(Request $request)
     {
-        $artists = Artists::where('name', 'like', '%'.$request->query('search').'%')
+        $artists = Artists::select('id', 'name')->where('name', 'like', '%'.$request->query('search').'%')
                             ->withCount('setlists')
+                            ->with('setlists',
+                                function($query) {
+                                    return $query->select('id', 'artists_id', 'updated_at')->Orderby('updated_at','desc')->first();
+                                }
+                            )
                             ->Orderby('name','asc')
                             ->paginate(10);
+                            // ->toSql();
 
         return response()->json($artists, 200);
     }

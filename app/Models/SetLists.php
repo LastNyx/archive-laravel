@@ -12,7 +12,6 @@ class SetLists extends Model
     protected $table = 'setlists';
     protected $primaryKey = 'id';
 
-
     public function Artists(){
         return $this->belongsTo(Artists::class);
     }
