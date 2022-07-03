@@ -44,6 +44,7 @@ class SetListsController extends Controller
         $newSetList->title = $request["title"];
         $newSetList->thumbnail = $request["thumbnail"];
         $newSetList->store = $request["store"];
+        $newSetList->artists_id = $request["artistsId"];
         $newSetList->save();
         return response()->json($newSetList, 200);
     }

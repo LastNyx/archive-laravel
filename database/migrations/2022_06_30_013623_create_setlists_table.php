@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('thumbnail');
             $table->string('store');
+            $table->string('artists_id');
             $table->timestamps();
         });
     }

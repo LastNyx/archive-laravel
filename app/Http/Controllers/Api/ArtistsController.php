@@ -16,6 +16,7 @@ class ArtistsController extends Controller
     public function index(Request $request)
     {
         $artists = Artists::where('name', 'like', '%'.$request->query('search').'%')
+                            ->withCount('setlists')
                             ->Orderby('name','asc')
                             ->paginate(10);
 
@@ -53,9 +54,14 @@ class ArtistsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $artist = Artists::find($id);
+
+        if($request["withSets"] == 'true'){
+            $artistSets = $artist->setLists()->where('title', 'like', '%'.$request->query('search').'%')->paginate(10);
+            return response()->json($artistSets, 200);
+        }
 
         return response()->json($artist, 200);
     }
